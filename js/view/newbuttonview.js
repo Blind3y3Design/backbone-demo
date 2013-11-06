@@ -32,18 +32,37 @@ var NewButtonView = Backbone.View.extend(
 		 * @returns {Boolean} Returns false to stop propagation
 		 */
 		createComment: function () {
-			// create new comment model
-			var comment = new CommentModel({});
-		
-			// render form view right after new button
-			var formview = new FormView({model: comment});
-			this.$el.after(formview.render().$el);
-		
-			// add saved model to collection after form was submitted successfully
-			formview.on('success', this.handleFormSuccess, this);
-		
-			// finally, return false to stop event propagation
-			return false;
+			if ($('.commentform').length > 0) {
+				console.log('model has changed');
+				$('.cancel').trigger('click');
+				// create new comment model
+				var comment = new CommentModel({});
+			
+				// render form view right after new button
+				var formview = new FormView({model: comment});
+				this.$el.after(formview.render().$el);
+				$('.author').val(authorDataGlobal);
+			
+				// add saved model to collection after form was submitted successfully
+				formview.on('success', this.handleFormSuccess, this);
+			
+				// finally, return false to stop event propagation
+				return false;
+			} else {
+				// create new comment model
+				var comment = new CommentModel({});
+			
+				// render form view right after new button
+				var formview = new FormView({model: comment});
+				this.$el.after(formview.render().$el);
+				$('.author').val(authorDataGlobal);
+			
+				// add saved model to collection after form was submitted successfully
+				formview.on('success', this.handleFormSuccess, this);
+			
+				// finally, return false to stop event propagation
+				return false;
+			}
 		},
 		
 		/**

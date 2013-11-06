@@ -38,6 +38,7 @@ var NewButtonView = Backbone.View.extend(
 			// render form view right after new button
 			var formview = new FormView({model: comment});
 			this.$el.after(formview.render().$el);
+			$('.author').val(authorDataGlobal);
 		
 			// add saved model to collection after form was submitted successfully
 			formview.on('success', this.handleFormSuccess, this);

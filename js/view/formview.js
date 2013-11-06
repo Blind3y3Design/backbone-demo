@@ -6,6 +6,12 @@
  * @author Bodnar Istvan <istvan@gawker.com>
  */
 /*global Mustache, CommentView, CommentModel */
+var inputText,
+	inputData,
+	newData,
+	oldData,
+	authorDataGlobal,
+	oldDataGlobal = '';
 var FormView = Backbone.View.extend(
 /** @lends FormView.prototype */
 	{
@@ -29,9 +35,11 @@ var FormView = Backbone.View.extend(
 		 */
 		events: {
 			'click .submit': 'submit',
-			'click .cancel': 'cancel'
-		},
-		
+			'click .cancel': 'cancel',
+			// 'change .text': 'warning',
+			// 'focus .text': 'focus',
+			'click #modalShadow': 'cancel'
+		},		
 		/**
 		 * View init method, subscribing to model events
 		 */
@@ -50,6 +58,11 @@ var FormView = Backbone.View.extend(
 				author: this.model.get('author'),
 				text: this.model.get('text')
 			};
+			inputText = $('textarea.text');
+			inputData = this.$el.find('.text').val();
+			// alert('You have unsaved content. Continue anyway?')
+				// clean up form
+			oldData = inputData;
 			this.$el.html(Mustache.to_html(template, template_vars));
 			return this;
 		},
@@ -65,7 +78,10 @@ var FormView = Backbone.View.extend(
 				author: this.$el.find('.author').val(),
 				text: this.$el.find('.text').val()
 			});
-			
+			var author = this.$el.find('.author').val(),
+				text = this.$el.find('.text').val();
+			oldDataGlobal = text;
+			authorDataGlobal = author;
 			// set an id if model was a new instance
 			// note: this is usually done automatically when items are stored in an API
 			if (this.model.isNew()) {
@@ -74,10 +90,10 @@ var FormView = Backbone.View.extend(
 			
 			// trigger the 'success' event on form, with the returned model as the only parameter
 			this.trigger('success', this.model);
-			
 			// remove form view from DOM and memory
 			this.remove();
 			return false;
+
 		},
 		
 		/**

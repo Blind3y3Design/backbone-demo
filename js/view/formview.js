@@ -65,19 +65,29 @@ var FormView = Backbone.View.extend(
 				author: this.$el.find('.author').val(),
 				text: this.$el.find('.text').val()
 			});
-			
-			// set an id if model was a new instance
-			// note: this is usually done automatically when items are stored in an API
-			if (this.model.isNew()) {
-				this.model.id = Math.floor(Math.random() * 1000);
+			var author = this.$el.find('.author').val(),
+				text = this.$el.find('.text').val();
+			if (author == ''){
+				$('#authorError.error').addClass('alert');
+				setTimeout(function(){$('#authorError.error').removeClass('alert');}, 2500)
+				return false;
+			} else if (text == '') {
+				$('#textError.error').addClass('alert');
+				setTimeout(function(){$('#textError.error').removeClass('alert');}, 2500)
+				return false;
+			} else {
+				// set an id if model was a new instance
+				// note: this is usually done automatically when items are stored in an API
+				if (this.model.isNew()) {
+					this.model.id = Math.floor(Math.random() * 1000);
+				}
+				
+				// trigger the 'success' event on form, with the returned model as the only parameter
+				this.trigger('success', this.model);
+				// remove form view from DOM and memory
+				this.remove();
+				return false;
 			}
-			
-			// trigger the 'success' event on form, with the returned model as the only parameter
-			this.trigger('success', this.model);
-			
-			// remove form view from DOM and memory
-			this.remove();
-			return false;
 		},
 		
 		/**

@@ -41,19 +41,20 @@ body {
 	color: #aaa;
 	font-size: 0.8em;
 }
-.commentform {
+/*.commentform {
 position: absolute;
 top: 0;
 left: 0;
 display: table;
 height: 100%;
 width: 100%;
-}
+}*/
+.commentform {background-color: yellow;border: 1px solid green;color: green;padding: 15px;margin: 5px 0px 5px 30px;width: 400px;}
 
 .commentform textarea, .commentform input {
 	width: 350px;
 }
-#modal{position:fixed;width:100%!important;height:100%!important;float:left;background-color:transparent;background:rgba(0,0,0,0.5);left:0;top:0;display:none;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);zoom:1;visibility:hidden;opacity:0;-webkit-transition:all .3s ease;-moz-transition:all .3s ease;-ms-transition:all .3s ease;-o-transition:all .3s ease;transition:all .3s ease}
+/*#modal{position:fixed;width:100%!important;height:100%!important;float:left;background-color:transparent;background:rgba(0,0,0,0.5);left:0;top:0;display:none;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);zoom:1;visibility:hidden;opacity:0;-webkit-transition:all .3s ease;-moz-transition:all .3s ease;-ms-transition:all .3s ease;-o-transition:all .3s ease;transition:all .3s ease}
 #modal.active{visibility:visible;opacity:1;z-index:99999;display:table}
 #modal>div{display:table-row;height:100%;width:100%}
 #modal>div>div{display:table-cell;text-align:center;vertical-align:middle}
@@ -64,6 +65,6 @@ width: 100%;
 #modal>div>div>div.active>#formContainer{position:relative;height:425px;width:560px}
 #modal>div>div>div>*{float:left;width:100%}
 #modal .closeModal{height:35px;width:35px;background:transparent;color:green;position:absolute;top:0;right:0;z-index:99;font-size:21px;border-radius:0;padding:4px 0 0 2px;box-sizing:border-box;-moz-box-sizing:border-box;text-transform:lowercase}
-#modal .closeModal:hover{cursor:pointer}
+#modal .closeModal:hover{cursor:pointer}*/
 .error {margin: 0 0 0 20px;text-align: left;color: red;font-size: 12px;opacity:0;-webkit-transition: all .25s ease;-moz-transition: all .25s ease;-ms-transition: all .25s ease;-o-transition: all .25s ease;transition: all .25s ease;}
 .error.alert {opacity:1;}

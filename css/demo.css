@@ -54,3 +54,5 @@ body {
 .commentform textarea, .commentform input {
 	width: 350px;
 }
+.error {margin: 0 0 0 20px;text-align: left;color: red;font-size: 12px;opacity:0;-webkit-transition: all .25s ease;-moz-transition: all .25s ease;-ms-transition: all .25s ease;-o-transition: all .25s ease;transition: all .25s ease;}
+.error.alert {opacity:1;}

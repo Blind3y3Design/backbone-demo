@@ -6,6 +6,12 @@
  * @author Bodnar Istvan <istvan@gawker.com>
  */
 /*global Mustache, CommentView, CommentModel */
+var inputText,
+	inputData,
+	newData,
+	oldData,
+	authorDataGlobal,
+	oldDataGlobal = '';
 var FormView = Backbone.View.extend(
 /** @lends FormView.prototype */
 	{
@@ -29,9 +35,11 @@ var FormView = Backbone.View.extend(
 		 */
 		events: {
 			'click .submit': 'submit',
-			'click .cancel': 'cancel'
-		},
-		
+			'click .cancel': 'cancel',
+			'change .text': 'warning',
+			// 'focus .text': 'focus',
+			'click #modalShadow': 'cancel'
+		},		
 		/**
 		 * View init method, subscribing to model events
 		 */
@@ -50,6 +58,11 @@ var FormView = Backbone.View.extend(
 				author: this.model.get('author'),
 				text: this.model.get('text')
 			};
+			inputText = $('textarea.text');
+			inputData = this.$el.find('.text').val();
+			// alert('You have unsaved content. Continue anyway?')
+				// clean up form
+			oldData = inputData;
 			this.$el.html(Mustache.to_html(template, template_vars));
 			return this;
 		},
@@ -65,32 +78,59 @@ var FormView = Backbone.View.extend(
 				author: this.$el.find('.author').val(),
 				text: this.$el.find('.text').val()
 			});
-			
-			// set an id if model was a new instance
-			// note: this is usually done automatically when items are stored in an API
-			if (this.model.isNew()) {
-				this.model.id = Math.floor(Math.random() * 1000);
+			var author = this.$el.find('.author').val(),
+				text = this.$el.find('.text').val();
+			oldDataGlobal = text;
+			authorDataGlobal = author;
+			if (author == ''){
+				$('#authorError.error').addClass('alert');
+				setTimeout(function(){$('#authorError.error').removeClass('alert');}, 2500)
+				return false;
+			} else if (text == '') {
+				$('#textError.error').addClass('alert');
+				setTimeout(function(){$('#textError.error').removeClass('alert');}, 2500)
+				return false;
+			} else {
+				// set an id if model was a new instance
+				// note: this is usually done automatically when items are stored in an API
+				if (this.model.isNew()) {
+					this.model.id = Math.floor(Math.random() * 1000);
+				}
+				
+				// trigger the 'success' event on form, with the returned model as the only parameter
+				this.trigger('success', this.model);
+				// remove form view from DOM and memory
+				this.remove();
+				return false;
 			}
-			
-			// trigger the 'success' event on form, with the returned model as the only parameter
-			this.trigger('success', this.model);
-			
-			// remove form view from DOM and memory
-			this.remove();
-			return false;
 		},
-		
+		/** Warns user of unsaved content
+		* Sets variable to compare against the save content
+		* if new post save content is ''
+		*/
+		warning: function() {
+			inputData = this.$el.find('.text').val();
+			newData = inputData;
+			console.log(newData);
+		},
 		/**
 		* Cancel button click handler
 		* Cleans up form view from DOM
 		* @returns {Boolean} Returns false to stop propagation
 		*/
 		cancel: function () {
-			// clean up form
-			this.remove();
-			return false;
-		},
-		
+				if (!(newData == oldDataGlobal)) {
+					if (confirm('You have unsaved content. Continue anyway?')) {
+						this.remove();
+						return false;
+					} else {
+						return false;
+					}
+				} else {
+					this.remove();
+					return false;
+				}
+		},	
 		/**
 		 * Update view if the model changes, helps keep two edit forms for the same model in sync
 		 * @returns {Boolean} Returns false to stop propagation

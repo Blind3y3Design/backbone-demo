@@ -20,13 +20,31 @@
 			{{{text}}}
 		</script>
 		<script type="text/jquery-x-template" id="form-template">
-			<strong>Comment edit</strong>
+			<!-- <strong>Comment edit</strong>
 			<form>
 				<input type="text" name="author" value="{{author}}" placeholder="Author name" class="author" /><br />
 				<textarea name="text" placeholder"Comment text" class="text">{{text}}</textarea>
 				<button class="submit"> Submit </button>
 				<button class="cancel"> Cancel </button>
-			</form>
+			</form> -->
+			<div id="modal" class="active">
+				<div id="modalShadow"></div>
+				<div>
+					<div>
+						<div id="modal-1" class="active">
+							<strong>Comment edit</strong>
+							<form>
+								<p id="authorError" class="error">This field is required.</p>
+								<input type="text" name="author" value="{{author}}" placeholder="Author name" class="author" /><br />
+								<p id="textError" class="error">This field is required.</p>
+								<textarea name="text" placeholder"Comment text" class="text">{{text}}</textarea>
+								<button class="submit"> Submit </button>
+								<button class="cancel"> Cancel </button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</script>
 		
 		<!-- Application files -->
